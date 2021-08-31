@@ -1,0 +1,52 @@
+@import url("https://fonts.googleapis.com/css2?family=Besley:wght@700&family=Roboto:wght@300;500&display=swap");
+
+body {
+  font-family: "Roboto", sans-serif;
+}
+
+.unsee {
+  display: none;
+}
+
+.font-selif {
+  font-family: "Besley", serif;
+}
+
+.virtual-interface {
+  font-weight: 300;
+}
+
+.midi-log,
+.midi-result,
+.midi-config {
+  max-width: 50%;
+  border: black solid 1px;
+  padding: 5px;
+  margin-top: 10px;
+}
+
+.midi-log {
+  height: 155px;
+  display: flex;
+  flex-direction: column;
+  overflow: scroll;
+  font-weight: 500;
+}
+
+.virtual-interface {
+  display: flex;
+  flex-direction: row;
+  margin-top: 10px;
+}
+
+.virtual-interface__box {
+  margin-right: 30px;
+}
+
+.label::after {
+  content: ":";
+}
+
+.send-button {
+  padding: 0px 40px;
+}

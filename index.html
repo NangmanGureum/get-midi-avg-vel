@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1 class="font-selif">Get The average of MIDI note velocities</h1>
+    <div class="midi-log">
+    </div>
+
+    <div class="midi-result">
+        <div class="midi-result__box">
+            <span class="label">Average velocity</span>
+            <span class="avg-vel"></span>
+        </div>
+    </div>
+
+    <div class="virtual-interface">
+        <div class="virtual-interface__box">
+            <span class="label">Note Number</span>
+            <input type="tel" id="tb-note-num">
+        </div>
+        <div class="virtual-interface__box">
+            <span class="label">Velocity</span>
+            <input type="tel" id="tb-vel">
+        </div>
+        <button class="send-button">Send</button>
+    </div>
+
+    <div class="midi-config">
+        <h2 class="not-support font-selif">This browser is not support for web MIDI</h2>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
