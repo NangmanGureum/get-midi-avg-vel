@@ -50,3 +50,7 @@ body {
 .send-button {
   padding: 0px 40px;
 }
+
+.not-support {
+  margin: 20px;
+}

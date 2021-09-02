@@ -1,5 +1,6 @@
 let midi_log = document.querySelector(".midi-log");
 let span_avg_vel = document.querySelector(".avg-vel");
+let span_re_vel = document.querySelector(".re-vel");
 let tb_note_num = document.querySelector("#tb-note-num");
 let tb_vel = document.querySelector("#tb-vel");
 let send_btn = document.querySelector(".send-button");
@@ -42,6 +43,7 @@ function paintMidiLog(note, vel) {
     vel_list.push(Number(vel));
     let vel_avg = average(vel_list);
     span_avg_vel.textContent = vel_avg;
+    span_re_vel.textContent = vel;
 
     let new_span = document.createElement("span");
     new_span.textContent = text_content;
@@ -57,10 +59,6 @@ function sendMidi() {
 
 // Thanks for:
 // https://wookim789.tistory.com/28
-function onMIDIFailure() {
-    div_midi_config.classList.add("unsee");
-}
-
 function onMIDISuccess(midiAccess) {
     not_support.classList.add("unsee");
     console.log(midiAccess);
@@ -98,7 +96,11 @@ function main() {
     send_btn.addEventListener("click", sendMidi);
     // Thanks for:
     // https://wookim789.tistory.com/28
-    navigator.requestMIDIAccess().then(onMIDISuccess, onMIDIFailure);
+    if (!navigator.requestMIDIAccess) {
+        div_midi_config.classList.add("unsee");
+    } else {
+        navigator.requestMIDIAccess().then(onMIDISuccess, function (){});
+    }
 }
 
 main()
