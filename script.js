@@ -6,6 +6,7 @@ let span_min_vel = document.querySelector(".min-vel");
 let tb_note_num = document.querySelector("#tb-note-num");
 let tb_vel = document.querySelector("#tb-vel");
 let send_btn = document.querySelector(".send-button");
+let reset_btn = document.querySelector(".reset-button");
 let not_support = document.querySelector(".not-support");
 let div_midi_config = document.querySelector(".midi-config__content");
 let select_device_select = document.querySelector("#device-select");
@@ -19,8 +20,10 @@ let vel_list = [];
 const average = arr => arr.reduce((p, c) => p + c, 0) / arr.length;
 
 function clear() {
-    const cNode = node.cloneNode(false);
-    midi_log.parentNode.replaceChild(cNode, midi_log);
+    // Thanks for:
+    // https://stackoverflow.com/questions/3955229/remove-all-child-elements-of-a-dom-node-in-javascript
+    // The answer which written by Mason Freed
+    midi_log.replaceChildren();
     vel_list = [];
 
     span_avg_vel.textContent = "";
@@ -55,8 +58,8 @@ function paintMidiLog(note, vel) {
     }
     vel_list.push(Number(vel));
     let vel_avg = average(vel_list);
-    let vel_max = Math.max(vel_list);
-    let vel_min = Math.min(vel_list);
+    let vel_max = Math.max(...vel_list);
+    let vel_min = Math.min(...vel_list);
 
     span_avg_vel.textContent = vel_avg;
     span_re_vel.textContent = vel;
@@ -136,6 +139,7 @@ function getMIDIMsg(event) {
 
 function main() {
     send_btn.addEventListener("click", sendMidi);
+    reset_btn.addEventListener("click", clear);
     // Thanks for:
     // https://wookim789.tistory.com/28
     if (!navigator.requestMIDIAccess) {
