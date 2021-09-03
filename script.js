@@ -1,6 +1,8 @@
 let midi_log = document.querySelector(".midi-log");
 let span_avg_vel = document.querySelector(".avg-vel");
 let span_re_vel = document.querySelector(".re-vel");
+let span_max_vel = document.querySelector(".max-vel");
+let span_min_vel = document.querySelector(".min-vel");
 let tb_note_num = document.querySelector("#tb-note-num");
 let tb_vel = document.querySelector("#tb-vel");
 let send_btn = document.querySelector(".send-button");
@@ -15,6 +17,17 @@ let vel_list = [];
 // Thanks for:
 // https://deeplify.dev/front-end/js/min-max-avg-in-array
 const average = arr => arr.reduce((p, c) => p + c, 0) / arr.length;
+
+function clear() {
+    const cNode = node.cloneNode(false);
+    midi_log.parentNode.replaceChild(cNode, midi_log);
+    vel_list = [];
+
+    span_avg_vel.textContent = "";
+    span_re_vel.textContent = "";
+    span_max_vel.textContent = "";
+    span_min_vel.textContent = "";
+}
 
 function paintMIDIOption(value, text) {
     let option_object = document.createElement("option");
@@ -42,8 +55,13 @@ function paintMidiLog(note, vel) {
     }
     vel_list.push(Number(vel));
     let vel_avg = average(vel_list);
+    let vel_max = Math.max(vel_list);
+    let vel_min = Math.min(vel_list);
+
     span_avg_vel.textContent = vel_avg;
     span_re_vel.textContent = vel;
+    span_max_vel.textContent = vel_max;
+    span_min_vel.textContent = vel_min;
 
     let new_span = document.createElement("span");
     new_span.textContent = text_content;
