@@ -59,6 +59,10 @@ function sendMidi() {
 
 // Thanks for:
 // https://wookim789.tistory.com/28
+function onMIDIFailure() {
+    div_midi_config.classList.add("unsee");
+}
+
 function onMIDISuccess(midiAccess) {
     not_support.classList.add("unsee");
     console.log(midiAccess);
@@ -86,8 +90,28 @@ function onMIDISuccess(midiAccess) {
 function getMIDIMsg(event) {
     const data = event.data;
     console.log(data);
+
+    // // Debug
+    // if (data[0] >= 144 && data[0] < 160){
+    //     const channel = (data[0] - 144) + 1
+    //     console.log("=============");
+    //     console.log("Note On Ch. " + channel);
+    //     console.log("Note: " + data[1]);
+    //     console.log("Velocity: " + data[2]);
+    // }
+
     // If note on
-    if (data[0] == 144) {
+    // It should be like this:
+    // if (data[0] == 144 && data[2] > 0) {
+    //     paintMidiLog(data[1], data[2])
+    // }
+    // 
+    // But the web MIDI API(Chrome, Other browsers which based on chromium)
+    // has a problem which is
+    // both Note on and Note off messages are recognized
+    // as 144 (= Note on Channel 1).
+    // So I write:
+    if (data[0] == 144 && data[2] > 0) {
         paintMidiLog(data[1], data[2])
     }
 }
@@ -97,9 +121,9 @@ function main() {
     // Thanks for:
     // https://wookim789.tistory.com/28
     if (!navigator.requestMIDIAccess) {
-        div_midi_config.classList.add("unsee");
+        onMIDIFailure();
     } else {
-        navigator.requestMIDIAccess().then(onMIDISuccess, function (){});
+        navigator.requestMIDIAccess().then(onMIDISuccess, onMIDIFailure);
     }
 }
 
