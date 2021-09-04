@@ -16,16 +16,21 @@ body {
   font-weight: 300;
 }
 
+.midi-record {
+  display: flex;
+}
+
 .midi-log,
 .midi-result,
 .midi-config {
-  max-width: 50%;
   border: black solid 1px;
   padding: 5px;
   margin-top: 10px;
 }
 
 .midi-log {
+  min-width: 50%;
+  min-height: 300px;
   height: 155px;
   display: flex;
   flex-direction: column;

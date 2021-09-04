@@ -15,9 +15,53 @@ let select_device_select = document.querySelector("#device-select");
 
 const IS_CHOROME = navigator.userAgent.indexOf("Chrome") !== -1;
 let vel_list = [];
+let vel_avgs = [];
 // Thanks for:
 // https://deeplify.dev/front-end/js/min-max-avg-in-array
 const average = arr => arr.reduce((p, c) => p + c, 0) / arr.length;
+
+function paintGraph() {
+    let list_len = Array.from({length: vel_list.length}, (_, i) => i + 1)
+
+    let trace_vel_avg = {
+      x: list_len,
+      y: vel_avgs,
+      type: 'scatter',
+      mode: 'lines',
+      name: 'Average of Velocity',
+      line: {
+          dash: 'dashdot'
+      }
+      };
+      
+    let trace_vel = {
+      x: list_len,
+      y: vel_list,
+      type: 'scatter',
+      mode: 'markers',
+      name: 'Note Velocity',
+      };
+    
+    let layout = {
+      title: 'MIDI Log in Graph',
+      xaxis: {
+        title: 'MIDI Events Count',
+        zeroline: false,
+        range: [1, 30],
+        autorange: true
+      },
+      yaxis: {
+        title: 'MIDI Velocity',
+        zeroline: false,
+        range: [1, 128],
+        autorange: false
+      }
+    };
+      
+    let data = [trace_vel, trace_vel_avg];
+      
+    Plotly.newPlot('midi-graph', data, layout);
+}
 
 function clear() {
     // Thanks for:
@@ -30,6 +74,8 @@ function clear() {
     span_re_vel.textContent = "";
     span_max_vel.textContent = "";
     span_min_vel.textContent = "";
+
+    paintGraph();
 }
 
 function paintMIDIOption(value, text) {
@@ -53,13 +99,16 @@ function paintMidiLog(note, vel) {
 
     let text_content = "Note: " + String(note) + ", Vel: " + String(vel);
     if (vel_list.length >= 30) {
-        vel_list.shift(); 
+        vel_list.shift();
+        vel_avgs.shift();
         midi_log.removeChild(midi_log.lastElementChild);
     }
-    vel_list.push(Number(vel));
     let vel_avg = average(vel_list);
     let vel_max = Math.max(...vel_list);
     let vel_min = Math.min(...vel_list);
+    
+    vel_list.push(Number(vel));
+    vel_avgs.push(Number(vel_avg));
 
     span_avg_vel.textContent = vel_avg;
     span_re_vel.textContent = vel;
@@ -69,6 +118,7 @@ function paintMidiLog(note, vel) {
     let new_span = document.createElement("span");
     new_span.textContent = text_content;
     midi_log.prepend(new_span);
+    paintGraph();
 }
 
 function sendMidi() {
@@ -140,6 +190,7 @@ function getMIDIMsg(event) {
 function main() {
     send_btn.addEventListener("click", sendMidi);
     reset_btn.addEventListener("click", clear);
+    paintGraph();
     // Thanks for:
     // https://wookim789.tistory.com/28
     if (!navigator.requestMIDIAccess) {
