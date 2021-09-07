@@ -10,30 +10,47 @@
 </head>
 <body>
     <h1 class="font-selif">Get The average of MIDI note velocity</h1>
-    <div class="midi-record">
-        <div class="midi-log">
+    <div class="midi-record top-box">
+        <div class="midi-log secondary-box">
         </div>
         <div id="midi-graph"></div>
     </div>
 
-    <div class="midi-result">
-        <div class="midi-result__box">
-            <span class="label">Average velocity</span>
-            <span class="avg-vel"></span>
+    <div class="midi-info top-box">
+        <div class="midi-result secondary-box">
+            <h2 class="font-selif">MIDI Info</h2>
+            <div class="midi-result__box">
+                <span class="label">Average velocity</span>
+                <span class="avg-vel"></span>
+            </div>
+            <div class="midi-result__box">
+                <span class="label">Recent velocity</span>
+                <span class="re-vel"></span>
+            </div>
+            <div class="midi-result__box">
+                <span class="label">Maximum velocity</span>
+                <span class="max-vel"></span>
+            </div>
+            <div class="midi-result__box">
+                <span class="label">Minimum velocity</span>
+                <span class="min-vel"></span>
+            </div>
+            <button class="reset-button">Reset</button>
         </div>
-        <div class="midi-result__box">
-            <span class="label">Recent velocity</span>
-            <span class="re-vel"></span>
+
+        <div class="logs-list secondary-box">
+            <h2 class="font-selif">MIDI Logs</h2>
+            <div class="logs-list__list">
+                <!-- <div class="log-item" id="1">
+                    <input type="radio" name="log-list" id="1">
+                    <span>2021-8-15 5:32</span>
+                </div> -->
+            </div>
+            <div class="logs-list__buttons">
+                <button class="log-save">Save</button>
+                <button class="remove-log">Remove</button>
+            </div>
         </div>
-        <div class="midi-result__box">
-            <span class="label">Maximum velocity</span>
-            <span class="max-vel"></span>
-        </div>
-        <div class="midi-result__box">
-            <span class="label">Minimum velocity</span>
-            <span class="min-vel"></span>
-        </div>
-        <button class="reset-button">Reset</button>
     </div>
 
     <div class="virtual-interface">
@@ -48,7 +65,7 @@
         <button class="send-button">Send</button>
     </div>
 
-    <div class="midi-config">
+    <div class="midi-config secondary-box">
         <h2 class="not-support font-selif">This browser is not support for web MIDI</h2>
         <div class="midi-config__content">
             <div class="midi-config__content__device">

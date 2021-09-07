@@ -12,30 +12,54 @@ body {
   font-family: "Besley", serif;
 }
 
+.logs-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.logs-list__list {
+  display: flex;
+  flex-direction: column;
+  overflow: scroll;
+  max-height: 65px;
+}
+
 .virtual-interface {
   font-weight: 300;
 }
 
-.midi-record {
+.top-box {
   display: flex;
+  justify-content: space-between;
 }
 
-.midi-log,
-.midi-result,
-.midi-config {
+.top-box > div {
+  min-width: 48%;
+  margin: 10px 5px 0px;
+}
+
+.secondary-box {
   border: black solid 1px;
   padding: 5px;
-  margin-top: 10px;
 }
 
 .midi-log {
-  min-width: 50%;
-  min-height: 300px;
+  min-height: 290px;
   height: 155px;
   display: flex;
   flex-direction: column;
   overflow: scroll;
   font-weight: 500;
+}
+
+.midi-info h2 {
+  font-size: 20px;
+  margin: 0px 3px 5px;
+}
+
+.logs-list > h2 {
+  margin: 0px 3px 2px;
 }
 
 .virtual-interface {

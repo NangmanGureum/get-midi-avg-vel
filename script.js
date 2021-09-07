@@ -6,16 +6,19 @@ let span_min_vel = document.querySelector(".min-vel");
 let tb_note_num = document.querySelector("#tb-note-num");
 let tb_vel = document.querySelector("#tb-vel");
 let send_btn = document.querySelector(".send-button");
+let log_save_btn = document.querySelector(".log-save");
+let log_remove_btn = document.querySelector(".remove-log");
 let reset_btn = document.querySelector(".reset-button");
 let not_support = document.querySelector(".not-support");
 let div_midi_config = document.querySelector(".midi-config__content");
 let select_device_select = document.querySelector("#device-select");
 
+let ls_data = [];
+// JSON
 
-
-const IS_CHOROME = navigator.userAgent.indexOf("Chrome") !== -1;
 let vel_list = [];
 let vel_avgs = [];
+let control_group = [];
 // Thanks for:
 // https://deeplify.dev/front-end/js/min-max-avg-in-array
 const average = arr => arr.reduce((p, c) => p + c, 0) / arr.length;
@@ -187,9 +190,48 @@ function getMIDIMsg(event) {
     }
 }
 
+function paintLogListItem(id, content) {
+    
+}
+
+function saveLog() {
+    const today_date = new Date();
+
+    const date_year = String(today_date.getFullYear());
+    const date_month = String(today_date.getMonth() + 1);
+    const date_day = String(today_date.getDate());
+
+    const date_hr = String(today_date.getHours());
+    const date_min = String(today_date.getMinutes());
+    const date_sec = String(today_date.getSeconds());
+
+    const timestamp = date_year + "-" + date_month + "-" + date_day + " " +
+                      date_hr + ":" + date_min + ":" + date_sec;
+
+    const log_obj = {
+        timestamp,
+        velocities: vel_list,
+        avg_logs: vel_avgs
+    };
+
+    console.log(log_obj);
+}
+
+
+function loadLS() {
+    const raw_data = localStorage.getItem('saved-log');
+    ls_data = JSON.parse(raw_data);
+
+}
+
 function main() {
-    send_btn.addEventListener("click", sendMidi);
+    loadLS()
     reset_btn.addEventListener("click", clear);
+
+    log_save_btn.addEventListener("click",saveLog);
+    // log_remove_btn
+
+    send_btn.addEventListener("click", sendMidi);
     paintGraph();
     // Thanks for:
     // https://wookim789.tistory.com/28
