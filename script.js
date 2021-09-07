@@ -176,7 +176,7 @@ function getMIDIMsg(event) {
 
     // If note on
     // It should be like this:
-    // if (data[0] == 144 && data[2] > 0) {
+    // if (data[0] == 144) {
     //     paintMidiLog(data[1], data[2])
     // }
     // 
